@@ -1,2 +1,194 @@
-# bme680-jetson-neo4j
-Storing BME680 Sensor data on Neo4j Graph Database 
+# Storing BME680 Sensor data on Neo4j Graph Database 
+
+Graph databases excel at representing complex relationships between data points, which can be useful in sensor data analysis.For example, if you have multiple sensors and want to understand how they are related, a graph database can help you model those relationships and perform queries to find patterns or anomalies in the data. It can also be useful for tracking the history of sensor readings and identifying trends over time.
+
+This is a cool demonstration of how Neo4j Graph database can help you 
+
+
+## Pre-requisite
+
+### Hardware Requirements:
+
+Jetson Nano: 2GB Model ($59)
+A 5V 4Amp charger
+128GB SD card
+BME680 sensors
+
+### Software Requirements:
+
+- Neo4j Cloud Instance
+- Neo4j Docker Extension
+
+
+## Setting up NVIDIA Jetson Nano
+
+
+
+- Jetson SD card image from [NVIDIA](https://developer.nvidia.com/embedded/downloads)
+- Etcher software installed on your system 
+- Preparing Your Jetson Nano for OS Installation 
+- Unzip the SD card image downloaded from https://developer.nvidia.com/embedded/downloads. 
+- Insert the SD card into your system. 
+- Bring up the Etcher tool and select the target SD card to which you want to flash the image.
+
+![image](https://user-images.githubusercontent.com/34368930/222421140-13b8ca21-f1a2-4727-aba6-db29e502f0b6.png)
+
+
+### Getting Your Sensors Working
+
+Using Grove Hat, you can plugin BME680 sensor to I2C as shown:
+
+![image](https://user-images.githubusercontent.com/34368930/222420031-43909bf3-bf88-460b-a03e-f34f03498ee2.png)
+
+
+After wiring the sensors, we recommend running I2C detection with i2cdetect to verify that you see the device: in our case it shows 76. Please note that the sensor communicates with a microcontroller using I2C or SPI communication protocols.
+
+```
+$ i2cdetect -r -y 1
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: -- -- -- -- -- -- 76 --
+```
+
+
+## Bringing up Neo4j Cloud Instance
+
+Visit https://neo4j.com/cloud/platform/aura-graph-database/ to create a free neo4j hosted graph database
+
+
+![image](https://user-images.githubusercontent.com/34368930/222420312-f603386a-96c6-4972-b234-39609169360f.png)
+
+
+## Docker Desktop 
+
+
+We'll be using [neo4j Docker Extension](https://github.com/collabnix/neo4j-docker-extension) to connect to the remote neo4j Cloud hosted instance.
+
+<img width="1365" alt="image" src="https://user-images.githubusercontent.com/34368930/222422058-452a3464-e5c7-4b42-9943-9ec4f349844b.png">
+
+
+## Cloning the Repository
+
+```
+ git clone https://github.com/collabnix/bme680-jetson-neo4j
+ cd bme680-jetson-neo4j
+```
+
+## Importing neo4j Python Module
+
+You can install the Neo4j driver for Python using pip:
+
+```
+pip install neo4j
+```
+
+## A Sample Python Script for Sensors
+
+This creates a new node with the label "SensorReading" and the specified properties. You can then query the database to retrieve sensor data and perform analysis or visualization.
+
+
+
+
+```
+from neo4j import GraphDatabase
+  
+driver = GraphDatabase.driver("neo4j+s://c9fafc6e.databases.neo4j.io", auth=("neo4j", "OgIO99y7E6vxXXXXXXXXXXHrJsTY"))
+
+with driver.session() as session:
+    session.run("CREATE (:SensorReading {sensor_id: 'sensor1', timestamp: datetime(), value: 23.4})")
+```
+
+## Running the Script
+
+For this demonstration, I shall be using all the sensor values.
+This script generates random values for temperature, humidity, pressure, and gas using the random library, and then inserts these values into Neo4j along with a timestamp. You can modify the ranges for the random values by changing the arguments to random.uniform() as needed.
+
+```
+python3 script.py
+```
+
+## Installing and Connecting neo4j Docker Extension to hosted neo4j Auro
+
+```
+git clone https://github.com/collabnix/neo4j-docker-extension
+cd neo4j-docker-extension
+make install
+```
+
+## Connecting to the remote neo4j instance
+
+
+
+
+
+<img width="1508" alt="image" src="https://user-images.githubusercontent.com/313480/222407314-1c895e4c-8c27-452f-8ff9-02cc0455c0ab.png">
+
+
+
+
+
+
+
+## Reference Code
+
+## A Sample Code for Storing and analyzing BME680 sensor data using Neo4j
+
+## Create a database and sensor node
+
+```
+CREATE DATABASE bme680_sensor
+USE bme680_sensor
+
+CREATE (:Sensor {name: 'BME680'})
+```
+
+## Insert data into the database
+
+```
+from neo4j import GraphDatabase
+from datetime import datetime
+from bme680 import BME680
+
+driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "password"))
+session = driver.session()
+
+sensor = BME680()
+
+for i in range(10):
+    temperature = round(sensor.get_temperature(), 2)
+    humidity = round(sensor.get_humidity(), 2)
+    pressure = round(sensor.get_pressure(), 2)
+    gas_resistance = round(sensor.get_gas_resistance(), 2)
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    
+    session.run("CREATE (:Reading {timestamp: $timestamp, temperature: $temperature, humidity: $humidity, pressure: $pressure, gas_resistance: $gas_resistance})", 
+                timestamp=timestamp, temperature=temperature, humidity=humidity, pressure=pressure, gas_resistance=gas_resistance)
+
+session.close()
+```
+
+## Query the data to analyze it
+
+
+```
+// Get the average temperature, humidity, pressure, and gas resistance for each day
+MATCH (r:Reading)
+WITH date(r.timestamp) as date, avg(r.temperature) as avg_temperature, avg(r.humidity) as avg_humidity, avg(r.pressure) as avg_pressure, avg(r.gas_resistance) as avg_gas_resistance
+RETURN date, avg_temperature, avg_humidity, avg_pressure, avg_gas_resistance
+cypher
+Copy code
+// Get the maximum and minimum temperature for each hour of the day
+MATCH (r:Reading)
+WITH hour(r.timestamp) as hour, max(r.temperature) as max_temperature, min(r.temperature) as min_temperature
+RETURN hour, max_temperature, min_temperature
+```
+
+## Visualize the data using Neo4j Browser
+
+You can use the Neo4j Browser to visualize the data as a graph or table. You can also use the built-in charting capabilities to create charts and graphs to display the data in different ways.
