@@ -68,7 +68,7 @@ $ i2cdetect -r -y 1
 
 ## Bringing up Neo4j Cloud Instance
 
-Visit https://neo4j.com/cloud/platform/aura-graph-database/ to create a free neo4j hosted graph database
+Visit [this link](https://neo4j.com/cloud/platform/aura-graph-database/) to create a free neo4j hosted graph database
 
 
 ![image](https://user-images.githubusercontent.com/34368930/222420312-f603386a-96c6-4972-b234-39609169360f.png)
