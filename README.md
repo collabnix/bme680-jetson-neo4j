@@ -7,7 +7,7 @@
 
 
 
-# Storing BME680 Sensor data on Neo4j Graph Database and visualizing it on Docker Extension
+# Storing BME680 Sensor data on Neo4j Graph Database and visualizing it using Docker Extension
 
 Graph databases excel at representing complex relationships between data points, which can be useful in sensor data analysis.For example, if you have multiple sensors and want to understand how they are related, a graph database can help you model those relationships and perform queries to find patterns or anomalies in the data. It can also be useful for tracking the history of sensor readings and identifying trends over time.
 
