@@ -154,6 +154,15 @@ make install
 <img width="1370" alt="image" src="https://user-images.githubusercontent.com/34368930/222463241-8500a4b4-0d75-4cd3-bce2-83250b360da2.png">
 
 
+Query:
+
+```
+MATCH (sr:SensorReading)
+WHERE sr.timestamp >= $timeFrom AND sr.timestamp <= $timeTo
+RETURN sr.timestamp as time, sr.temperature as temp, sr.humidity as hum, sr.pressure as press, sr.gas as gas_res
+ORDER BY sr.timestamp ASC
+```
+
 
 
 
