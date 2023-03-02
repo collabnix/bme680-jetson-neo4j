@@ -125,6 +125,13 @@ This script generates random values for temperature, humidity, pressure, and gas
 python3 sensorloader.py
 ```
 
+```
+Inserted sensor reading - temperature: 26.68, humidity: 41.35, pressure: 1008.6, gas: 3110.63
+Inserted sensor reading - temperature: 12.42, humidity: 49.71, pressure: 1149.34, gas: 4815.11
+Inserted sensor reading - temperature: 27.73, humidity: 77.2, pressure: 1081.24, gas: 4737.95
+Inserted sensor reading - temperature: 19.22, humidity: 50.17, pressure: 958.73, gas: 516.57
+```
+
 ## Installing and Connecting neo4j Docker Extension to hosted neo4j Auro
 
 ```
@@ -138,6 +145,15 @@ make install
 
 
 <img width="1508" alt="image" src="https://user-images.githubusercontent.com/313480/222407314-1c895e4c-8c27-452f-8ff9-02cc0455c0ab.png">
+
+
+## Using Neo4j Data Source for Grafana
+
+<img width="1364" alt="image" src="https://user-images.githubusercontent.com/34368930/222455775-c724e8c6-2a0b-4edc-8d16-cfb2252a59ee.png">
+
+<img width="1370" alt="image" src="https://user-images.githubusercontent.com/34368930/222463241-8500a4b4-0d75-4cd3-bce2-83250b360da2.png">
+
+
 
 
 
