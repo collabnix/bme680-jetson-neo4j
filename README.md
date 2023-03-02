@@ -125,70 +125,9 @@ make install
 
 
 
-
-
 <img width="1508" alt="image" src="https://user-images.githubusercontent.com/313480/222407314-1c895e4c-8c27-452f-8ff9-02cc0455c0ab.png">
 
 
 
 
 
-
-
-## Reference Code
-
-## A Sample Code for Storing and analyzing BME680 sensor data using Neo4j
-
-## Create a database and sensor node
-
-```
-CREATE DATABASE bme680_sensor
-USE bme680_sensor
-
-CREATE (:Sensor {name: 'BME680'})
-```
-
-## Insert data into the database
-
-```
-from neo4j import GraphDatabase
-from datetime import datetime
-from bme680 import BME680
-
-driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "password"))
-session = driver.session()
-
-sensor = BME680()
-
-for i in range(10):
-    temperature = round(sensor.get_temperature(), 2)
-    humidity = round(sensor.get_humidity(), 2)
-    pressure = round(sensor.get_pressure(), 2)
-    gas_resistance = round(sensor.get_gas_resistance(), 2)
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    
-    session.run("CREATE (:Reading {timestamp: $timestamp, temperature: $temperature, humidity: $humidity, pressure: $pressure, gas_resistance: $gas_resistance})", 
-                timestamp=timestamp, temperature=temperature, humidity=humidity, pressure=pressure, gas_resistance=gas_resistance)
-
-session.close()
-```
-
-## Query the data to analyze it
-
-
-```
-// Get the average temperature, humidity, pressure, and gas resistance for each day
-MATCH (r:Reading)
-WITH date(r.timestamp) as date, avg(r.temperature) as avg_temperature, avg(r.humidity) as avg_humidity, avg(r.pressure) as avg_pressure, avg(r.gas_resistance) as avg_gas_resistance
-RETURN date, avg_temperature, avg_humidity, avg_pressure, avg_gas_resistance
-cypher
-Copy code
-// Get the maximum and minimum temperature for each hour of the day
-MATCH (r:Reading)
-WITH hour(r.timestamp) as hour, max(r.temperature) as max_temperature, min(r.temperature) as min_temperature
-RETURN hour, max_temperature, min_temperature
-```
-
-## Visualize the data using Neo4j Browser
-
-You can use the Neo4j Browser to visualize the data as a graph or table. You can also use the built-in charting capabilities to create charts and graphs to display the data in different ways.
