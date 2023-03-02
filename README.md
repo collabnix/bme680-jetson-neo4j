@@ -1,3 +1,12 @@
+![stars](https://img.shields.io/github/stars/collabnix/bme680-jetson-neo4j)
+![forks](https://img.shields.io/github/forks/collabnix/bme680-jetson-neo4j)
+![Discord](https://img.shields.io/discord/1020180904129335379)
+![issues](https://img.shields.io/github/issues/collabnix/bme680-jetson-neo4j)
+![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=collabnix.bme680-jetson-neo4j)
+![Twitter](https://img.shields.io/twitter/follow/collabnix?style=social)
+
+
+
 # Storing BME680 Sensor data on Neo4j Graph Database 
 
 Graph databases excel at representing complex relationships between data points, which can be useful in sensor data analysis.For example, if you have multiple sensors and want to understand how they are related, a graph database can help you model those relationships and perform queries to find patterns or anomalies in the data. It can also be useful for tracking the history of sensor readings and identifying trends over time.
