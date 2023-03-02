@@ -110,7 +110,7 @@ For this demonstration, I shall be using all the sensor values.
 This script generates random values for temperature, humidity, pressure, and gas using the random library, and then inserts these values into Neo4j along with a timestamp. You can modify the ranges for the random values by changing the arguments to random.uniform() as needed.
 
 ```
-python3 script.py
+python3 sensorloader.py
 ```
 
 ## Installing and Connecting neo4j Docker Extension to hosted neo4j Auro
