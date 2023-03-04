@@ -30,6 +30,7 @@ BME680 sensors
 
 - Neo4j Cloud Instance
 - Neo4j Docker Extension
+- Grafana Docker Extension
 
 
 ## Setting up NVIDIA Jetson Nano
