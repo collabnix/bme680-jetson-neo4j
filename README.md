@@ -133,6 +133,14 @@ Inserted sensor reading - temperature: 27.73, humidity: 77.2, pressure: 1081.24,
 Inserted sensor reading - temperature: 19.22, humidity: 50.17, pressure: 958.73, gas: 516.57
 ```
 
+In this modified script, we import the BME680 class from the bme680 library and create an instance of the class named sensor. We also modify the generate_sensor_data function to read sensor data from the sensor object.
+
+Then, inside the loop, we use the sensor.get_sensor_data() method to read the sensor data and store it in the temperature, humidity, pressure, and gas variables. We round the values to two decimal places using the round function.
+
+We then use the create_sensor_reading function to insert the sensor data into Neo4j, using the same format as before. Finally, we print a message indicating the values of the newly inserted sensor reading.
+
+Note that the get_sensor_data() method may return False if there is an error reading the sensor data, so we add a check for this and print an error message if necessary.
+
 ## Installing and Connecting neo4j Docker Extension to hosted neo4j Auro
 
 ```shell
