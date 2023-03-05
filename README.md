@@ -248,8 +248,11 @@ Then, you would create a "READS" relationship between the Sensor node and the Ti
 
 ```css
 MATCH (s:Sensor {name: 'BME680'}), (t:Timestamp)
-CREATE (s)-[:READS {temperature: 25, pressure: 1000, humidity: 50}]->(t)
+CREATE (s)-[:READS {temperature: 37.0, pressure: 1168.83, humidity: 37.23}]->(t)
 ```
+
+<img width="1505" alt="image" src="https://user-images.githubusercontent.com/34368930/222949941-236cd924-3ac8-4ed8-98a5-9b2a8de795e2.png">
+
 
 This query creates a "READS" relationship between the Sensor node and the Timestamp node, with properties for temperature, pressure, and humidity set to the values 25, 1000, and 50, respectively.
 
