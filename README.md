@@ -153,7 +153,16 @@ Note that the get_sensor_data() method may return False if there is an error rea
 
 ```
 python3 sensorloader_co2.py
+Warming up sensor... (takes 4-5 minutes)
+Starting CO2 data collection...
+Inserted CO2 reading - concentration: 1294686.06
 ```
+
+Please Note: The CO2 concentration of 1294686.06 ppm (parts per million) that you mentioned is quite high compared to typical indoor CO2 levels. In a well-ventilated indoor environment, the CO2 concentration should be around 400-1000 ppm. CO2 levels above 1000 ppm can cause drowsiness, headaches, and other symptoms, while levels above 5000 ppm can cause serious health effects and even death in extreme cases.
+
+However, the interpretation of CO2 levels depends on the context and the environment in which the measurements were taken. For example, in some industrial settings, such as breweries or greenhouses, CO2 levels may be intentionally high for specific purposes. It is also important to consider other factors that may affect indoor air quality, such as humidity, ventilation, and the presence of other pollutants.
+
+
 
 
 ## Installing and Connecting neo4j Docker Extension to hosted neo4j Auro
