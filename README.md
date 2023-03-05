@@ -181,6 +181,9 @@ WHERE r.pressure IS NOT NULL
 RETURN DISTINCT "relationship" AS entity, r.pressure AS pressure LIMIT 25;
 ```
 
+<img width="1029" alt="image" src="https://user-images.githubusercontent.com/34368930/222948945-63f7ec7d-9e02-48fd-9f9c-bcf0c3af62df.png">
+
+
 ### Explanation:
 
 This is a Neo4j query written in the Cypher query language.
@@ -207,6 +210,9 @@ MATCH ()-[r]-()
 WHERE r.temperature IS NOT NULL
 RETURN DISTINCT "relationship" AS entity, r.temperature AS temperature LIMIT 25;
 ```
+
+<img width="575" alt="image" src="https://user-images.githubusercontent.com/34368930/222948922-1ba55db7-d40e-4b40-9b2b-ed79eb94fdc2.png">
+
 
 ### Explanation
 
