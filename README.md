@@ -141,6 +141,21 @@ We then use the create_sensor_reading function to insert the sensor data into Ne
 
 Note that the get_sensor_data() method may return False if there is an error reading the sensor data, so we add a check for this and print an error message if necessary.
 
+
+## Fetching co2, no2 gases
+
+- The BME680 sensor measures the concentration of several different gases, including volatile organic compounds (VOCs), carbon monoxide (CO), and nitrogen dioxide (NO2), in addition to measuring temperature, humidity, and pressure.
+- To fetch the concentration of these gases from the sensor, you can use the get_sensor_data() method of the BME680 class, which returns a BME680Data object that contains the latest sensor readings. 
+- You can then access the gas concentration values from the BME680Data object using the following attributes:
+   - gas_resistance: The resistance of the gas sensor in ohms, which is related to the concentration of VOCs in the air.  
+   - gas (a list): The concentration of different gases in parts per million (ppm), including CO and NO2.
+
+
+```
+python3 sensorloader_co2.py
+```
+
+
 ## Installing and Connecting neo4j Docker Extension to hosted neo4j Auro
 
 ```shell
