@@ -1,3 +1,17 @@
+# This script assumes that you have a BME680 sensor attached to your system and that the necessary dependencies (e.g. the bme680 Python module) are installed. 
+# You will need to replace the placeholder values for the Neo4j instance URL and password with the actual values for your instance.
+# The script starts by setting up the Neo4j driver and the BME680 sensor. 
+# It then defines a function to create a CO2 reading node in Neo4j, which takes the CO2 concentration as an input.
+# Next, the script waits for the sensor to warm up by setting the gas status to enable gas measurements and waiting for 300 seconds (5 minutes).
+# After that, it starts retrieving CO2 concentration data by calling sensor.get_sensor_data() in a loop. 
+# If the data retrieval is successful, the CO2 concentration is calculated as sensor.data.gas_resistance / 10 and rounded to two decimal places. 
+# The script then inserts a new CO2 reading node into the Neo4j database by calling the create_co2_reading function within a with driver.session() 
+# as session: block.
+
+The script runs indefinitely, sleeping for 60 seconds between each data retrieval and insertion. If there is an error retrieving the sensor data, an error message is printed to the console.
+#
+#
+#
 from neo4j import GraphDatabase
 import time
 import bme680
