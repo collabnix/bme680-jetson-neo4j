@@ -135,7 +135,7 @@ Inserted sensor reading - temperature: 19.22, humidity: 50.17, pressure: 958.73,
 
 ## Installing and Connecting neo4j Docker Extension to hosted neo4j Auro
 
-```
+```shell
 git clone https://github.com/collabnix/neo4j-docker-extension
 cd neo4j-docker-extension
 make install
@@ -171,7 +171,7 @@ ORDER BY sr.timestamp ASC
 
 ### Pressure
 
-```
+```css
 MATCH (n) 
 WHERE n.pressure IS NOT NULL
 RETURN DISTINCT "node" as entity, n.pressure AS pressure LIMIT 25
@@ -201,7 +201,7 @@ Overall, the query returns a list of up to 25 pressure values from either nodes 
 
 ### Temperature
 
-```
+```css
 MATCH (n) 
 WHERE n.temperature IS NOT NULL
 RETURN DISTINCT "node" as entity, n.temperature AS temperature LIMIT 25
