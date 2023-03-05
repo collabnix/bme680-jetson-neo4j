@@ -196,4 +196,28 @@ Both parts of the query use the "DISTINCT" keyword to ensure that only unique va
 Overall, the query returns a list of up to 25 pressure values from either nodes or relationships in the graph, along with an indicator of whether each value came from a node or a relationship.
 
 
+### Temperature
 
+```
+MATCH (n) 
+WHERE n.temperature IS NOT NULL
+RETURN DISTINCT "node" as entity, n.temperature AS temperature LIMIT 25
+UNION ALL 
+MATCH ()-[r]-() 
+WHERE r.temperature IS NOT NULL
+RETURN DISTINCT "relationship" AS entity, r.temperature AS temperature LIMIT 25;
+```
+
+### Explanation
+
+This is a Neo4j query written in the Cypher query language.
+
+The query is similar to the previous one, but instead of selecting nodes and relationships based on the "pressure" property, it selects nodes and relationships based on the "temperature" property.
+
+The first part of the query selects all nodes in the graph where the "temperature" property is not null, and returns the value of the "temperature" property for each node. The results are labeled with the string "node" as the entity and the "temperature" value.
+
+The second part of the query selects all relationships in the graph where the "temperature" property is not null, and returns the value of the "temperature" property for each relationship. The results are labeled with the string "relationship" as the entity and the "temperature" value.
+
+Both parts of the query use the "DISTINCT" keyword to ensure that only unique values are returned, and the "LIMIT" keyword to limit the number of results to 25.
+
+Overall, the query returns a list of up to 25 temperature values from either nodes or relationships in the graph, along with an indicator of whether each value came from a node or a relationship.
