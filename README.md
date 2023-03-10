@@ -196,6 +196,7 @@ RETURN sr.timestamp as time, sr.temperature as temp, sr.humidity as hum, sr.pres
 ORDER BY sr.timestamp ASC
 ```
 
+<img width="1510" alt="image" src="https://user-images.githubusercontent.com/34368930/224379370-f8b43358-fb27-408b-aa74-51c6a0caaf4f.png">
 
 
 
