@@ -261,6 +261,21 @@ Both parts of the query use the "DISTINCT" keyword to ensure that only unique va
 
 Overall, the query returns a list of up to 25 temperature values from either nodes or relationships in the graph, along with an indicator of whether each value came from a node or a relationship.
 
+
+## Humidity
+
+```css
+MATCH (n) 
+WHERE n.humidity IS NOT NULL
+RETURN DISTINCT "node" as entity, n.humidity AS humidity LIMIT 25
+UNION ALL 
+MATCH ()-[r]-() 
+WHERE r.humidity IS NOT NULL
+RETURN DISTINCT "relationship" AS entity, r.humidity AS pressure LIMIT 25;
+```
+
+
+
 ## Understanding the Relationship
 
 Sure, here is an example of how you might model a BME680 sensor and its readings in Neo4j:
