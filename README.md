@@ -390,5 +390,81 @@ In this example, we use PySpark to process the sensor data. We read in the data 
 These are just a few examples of how you can scale your data pipeline to handle millions of sensors. The specific approach you choose will depend on your data processing requirements, available hardware, and other factors.
 
 
+## Storing the Data
+
+Here are a few ways you can store data for millions of sensors:
+
+### Relational databases
+
+Relational databases are a common choice for storing large volumes of data. They offer a structured way to store and retrieve data, and many tools and libraries are available to work with them. Examples of popular relational databases include PostgreSQL, MySQL, and Microsoft SQL Server.
+Here is an example of using PostgreSQL to store sensor data:
+
+```
+import psycopg2
+
+conn = psycopg2.connect(
+    host="yourhost",
+    database="yourdatabase",
+    user="yourusername",
+    password="yourpassword"
+)
+
+cursor = conn.cursor()
+
+# create a table to store sensor data
+cursor.execute("CREATE TABLE sensor_data (sensor_id INT, timestamp TIMESTAMP, value FLOAT)")
+
+# insert data into the table
+sensor_id = 1
+timestamp = '2022-03-15 12:00:00'
+value = 25.4
+cursor.execute("INSERT INTO sensor_data (sensor_id, timestamp, value) VALUES (%s, %s, %s)", (sensor_id, timestamp, value))
+
+# commit changes and close the connection
+conn.commit()
+cursor.close()
+conn.close()
+```
+
+### NoSQL databases
+
+NoSQL databases are designed to handle large volumes of unstructured or semi-structured data. They are often used for big data applications and can scale horizontally to handle massive amounts of data. Examples of popular NoSQL databases include Apache Cassandra, MongoDB, and Amazon DynamoDB.
+Here is an example of using MongoDB to store sensor data:
+
+```
+import pymongo
+
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+
+# create a database and collection to store sensor data
+db = client["sensor_data"]
+collection = db["data_points"]
+
+# insert data into the collection
+data_point = {"sensor_id": 1, "timestamp": "2022-03-15 12:00:00", "value": 25.4}
+collection.insert_one(data_point)
+```
+
+### Distributed file systems
+
+Distributed file systems are designed to store and manage large volumes of data across multiple machines. They are often used in big data applications and can scale horizontally to handle massive amounts of data. Examples of popular distributed file systems include Apache Hadoop HDFS and Amazon S3.
+Here is an example of using Hadoop HDFS to store sensor data:
+
+```
+import pyarrow as pa
+import pyarrow.parquet as pq
+import hdfs
+
+client = hdfs.InsecureClient('http://localhost:9870')
+
+# create a PyArrow table to store sensor data
+data_table = pa.Table.from_pydict({"sensor_id": [1], "timestamp": ["2022-03-15 12:00:00"], "value": [25.4]})
+
+# write the table to HDFS as a Parquet file
+with client.write('sensor_data.parquet', replication=1) as writer:
+    pq.write_table(data_table, writer)
+```
+
+
 
 
