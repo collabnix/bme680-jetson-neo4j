@@ -465,6 +465,76 @@ with client.write('sensor_data.parquet', replication=1) as writer:
     pq.write_table(data_table, writer)
 ```
 
+## Quesring data for Millions of Sensors
+
+Here are a few examples of how you can query data for millions of sensors:
+
+## Relational databases
+
+To query data from a relational database, you can use SQL. SQL provides a rich set of operations for filtering, grouping, and aggregating data. Examples of SQL operations include SELECT, WHERE, GROUP BY, and JOIN.
+Here is an example of querying sensor data from a PostgreSQL database:
+
+```
+import psycopg2
+
+conn = psycopg2.connect(
+    host="yourhost",
+    database="yourdatabase",
+    user="yourusername",
+    password="yourpassword"
+)
+
+cursor = conn.cursor()
+
+# query the maximum value for each sensor
+cursor.execute("SELECT sensor_id, MAX(value) FROM sensor_data GROUP BY sensor_id")
+rows = cursor.fetchall()
+for row in rows:
+    print(f"Sensor {row[0]} has a maximum value of {row[1]}")
+
+# close the cursor and connection
+cursor.close()
+conn.close()
+```
+
+### NoSQL databases
+
+To query data from a NoSQL database, you can use the database's native query language. Examples of query languages include Cassandra Query Language (CQL), MongoDB Query Language (MQL), and Amazon DynamoDB Query Language.
+Here is an example of querying sensor data from a MongoDB database:
+
+```
+import pymongo
+
+client = pymongo.MongoClient("mongodb://localhost:27017/")
+
+# get the sensor data collection
+collection = client["sensor_data"]["data_points"]
+
+# query the maximum value for each sensor
+rows = collection.aggregate([
+    {"$group": {"_id": "$sensor_id", "max_value": {"$max": "$value"}}}
+])
+for row in rows:
+    print(f"Sensor {row['_id']} has a maximum value of {row['max_value']}")
+```
+
+### Distributed file systems
+
+To query data from a distributed file system, you can use tools like Apache Spark or Apache Hive. These tools provide a SQL-like interface to query data stored in Hadoop HDFS or Amazon S3.
+Here is an example of querying sensor data from a Parquet file stored in Hadoop HDFS using PySpark:
+
+```
+from pyspark.sql import SparkSession
+
+spark = SparkSession.builder.appName("SensorDataQuery").getOrCreate()
+
+# read the sensor data Parquet file into a PySpark DataFrame
+df = spark.read.parquet("hdfs://localhost:9000/sensor_data.parquet")
+
+# query the maximum value for each sensor
+df.groupBy("sensor_id").max("value").show()
+```
+
 
 
 
